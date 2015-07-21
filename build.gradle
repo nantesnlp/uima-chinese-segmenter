@@ -1,0 +1,84 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'fr.univnantes.lina'
+archivesBaseName = 'uima-chinese-segmenter'
+version = '1.0'
+
+task javadocJar(type: Jar) {
+	classifier = 'javadoc'
+	from javadoc
+}
+
+task sourcesJar(type: Jar) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives javadocJar, sourcesJar
+}
+
+/*
+signing {
+	sign configurations.archives
+}
+*/
+
+dependencies {
+  compile 'org.apache.uima:uimaj-core:2.6.+'
+  compile "org.apache.uima:uimafit-core:2.1.+"
+  compile 'fr.univnantes.lina:uima-profiler:1.+'
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+uploadArchives {
+	repositories {
+	  mavenDeployer {
+		//beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+		repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+		  authentication(userName: ossrhUsername, password: ossrhPassword)
+		}
+
+		snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+		  authentication(userName: ossrhUsername, password: ossrhPassword)
+		}
+
+		pom.project {
+		  name 'UIMA Chinese Segmenter'
+		  packaging 'jar'
+		  // optionally artifactId can be defined here
+		  description 'A UIMA Analysis Engine to tokenize a chinese text into a sequence of chenese words'
+      //url 'http://www.example.com/example-application'
+
+		  scm {
+			  connection 'scm:git:git@github.com:julestar/uima-chinese-segmenter.git'
+			  developerConnection 'scm:git:git@github.com:julestar/uima-chinese-segmenter.git'
+			  url 'git@github.com:julestar/uima-chinese-segmenter.git'
+		  }
+
+		  licenses {
+			  license {
+				  name 'The Apache License, Version 2.0'
+				  url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+			  }
+		  }
+
+		  developers {
+			  developer {
+				  id developerId
+				  name developerName
+				  email developerEmail
+			  }
+		  }
+		}
+	  }
+	}
+}
