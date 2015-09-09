@@ -2,8 +2,9 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'maven-publish'
 
-group = 'fr.univnantes.julestar'
+group = 'fr.univ-nantes.julestar'
 archivesBaseName = 'uima-chinese-segmenter'
 version = '1.0'
 
@@ -28,12 +29,24 @@ signing {
 dependencies {
   compile 'org.apache.uima:uimaj-core:2.6.+'
   compile "org.apache.uima:uimafit-core:2.1.+"
-  compile 'fr.univnantes.julestar:uima-profiler:1.+'
+  compile 'fr.univ-nantes.julestar:uima-profiler:1.+'
 }
 
 repositories {
 	mavenLocal()
 	mavenCentral()
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			groupId group
+			artifactId archivesBaseName
+			version version
+
+			from components.java
+		}
+	}
 }
 
 if(hasProperty("ossrhUsername")) {
