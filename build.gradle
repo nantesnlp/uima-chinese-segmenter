@@ -30,9 +30,9 @@ if(hasProperty("signing.keyId")) {
 }
 
 dependencies {
-  compile 'org.apache.uima:uimaj-core:2.6.+'
-  compile "org.apache.uima:uimafit-core:2.1.+"
-  compile 'fr.univ-nantes.julestar:uima-profiler:1.+'
+  compile 'org.apache.uima:uimaj-core:2.6.0'
+  compile "org.apache.uima:uimafit-core:2.1.0"
+  compile 'fr.univ-nantes.julestar:uima-profiler:1.0'
 }
 
 repositories {
@@ -71,7 +71,7 @@ if(hasProperty("ossrhUsername")) {
 			  packaging 'jar'
 			  // optionally artifactId can be defined here
 			  description 'A UIMA Analysis Engine to tokenize a chinese text into a sequence of chenese words'
-	      //url 'http://www.example.com/example-application'
+			  url 'https://github.com/JuleStar/uima-chinese-segmenter'
 	
 			  scm {
 				  connection 'scm:git:git@github.com:julestar/uima-chinese-segmenter.git'
