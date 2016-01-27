@@ -1,17 +1,16 @@
 package fr.univnantes.lina.uima.engines;
 
 import org.apache.uima.UimaContext;
-import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.text.AnnotationFS;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.descriptor.ExternalResource;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceAccessException;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import fr.univnantes.lina.UIMAProfiler;
 import fr.univnantes.lina.uima.models.ChineseSegment;
 
 public class ChineseSegmenter extends JCasAnnotator_ImplBase {
@@ -27,7 +26,7 @@ public class ChineseSegmenter extends JCasAnnotator_ImplBase {
 	public static final String CHINESE_NUMBER_SEGMENTS = "ChineseNumberSegments";
 	@ExternalResource(key = CHINESE_NUMBER_SEGMENTS, mandatory = true)
 	private ChineseSegment chineseNumberSegments;
-	
+
 	public static final String ANNOTATION_TYPE = "AnnotationType";
 	@ConfigurationParameter(mandatory = true, name=ANNOTATION_TYPE)
 	private String annotationType;
@@ -61,8 +60,6 @@ public class ChineseSegmenter extends JCasAnnotator_ImplBase {
 	
 	@Override
 	public void process(JCas cas) throws AnalysisEngineProcessException {
-		UIMAProfiler.getProfiler("AnalysisEngine").start(this, "process");
-		
 		Type type = this.getAnnotationType(cas);
 		String text = cas.getDocumentText();
 		int len = text.length();
@@ -75,8 +72,6 @@ public class ChineseSegmenter extends JCasAnnotator_ImplBase {
 		    	this.annotate(cas, type, i, i + boundaries[i]);
 		    }
 		}
-		UIMAProfiler.getProfiler("AnalysisEngine").stop(this, "process");
-		
 	}
 		
 	private boolean areSpaces(String text, int begin, int end) {

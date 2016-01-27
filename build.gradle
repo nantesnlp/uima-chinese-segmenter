@@ -6,7 +6,7 @@ apply plugin: 'maven-publish'
 
 group = 'fr.univ-nantes.julestar'
 archivesBaseName = 'uima-chinese-segmenter'
-version = '1.0'
+version = '1.1'
 
 task javadocJar(type: Jar) {
 	classifier = 'javadoc'
@@ -32,7 +32,6 @@ if(hasProperty("signing.keyId")) {
 dependencies {
   compile 'org.apache.uima:uimaj-core:2.6.0'
   compile "org.apache.uima:uimafit-core:2.1.0"
-  compile 'fr.univ-nantes.julestar:uima-profiler:1.0'
 }
 
 repositories {
